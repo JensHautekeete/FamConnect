@@ -159,46 +159,16 @@
             </LinearLayout>
 
             <!-- Tekst geboorttedatum -->
-            <TextView
-                android:text="@string/register_Date_Text"
+            <EditText
+                android:hint="@string/register_Date_Text"
                 android:layout_width="match_parent"
                 android:layout_height="20pt"
-                android:id="@+id/register_Date_Text"
-                android:textSize="8pt"
+                android:inputType="date"
+                android:id="@+id/user_birth"
+                android:maxLines="1"
                 android:textColor="@color/zwart"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="1pt"
                 android:singleLine="true"/>
-
-            <!-- DatePicker geboorttedatum -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.04">
-
-                <!-- Dag -->
-                <NumberPicker
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/numberPicker_Day"
-                    android:layout_weight="1"
-                    />
-
-                <!-- Maand -->
-                <NumberPicker
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/numberPicker_Month"
-                    android:layout_weight="1" />
-
-                <!-- Jaar -->
-                <NumberPicker
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/numberPicker_Year"
-                    android:layout_weight="1" />
-            </LinearLayout>
 
             <!-- Register Button -->
             <Button
@@ -217,7 +187,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:id="@+id/link_Login" />
+                android:id="@+id/link_Login"
+                android:onClick="userLog"/>
 
 
         </LinearLayout>

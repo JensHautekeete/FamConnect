@@ -75,7 +75,8 @@
             android:text="@string/button_Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_Login" />
+            android:id="@+id/button_Login"
+            android:onClick="userLogin"/>
 
         <!-- Text Register -->
         <TextView
@@ -83,7 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/link_Register" />
+            android:id="@+id/link_Register"
+            android:onClick="userReg"/>
 
         <!-- Button Register -->
     </LinearLayout>
