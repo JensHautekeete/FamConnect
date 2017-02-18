@@ -2,6 +2,7 @@ package com.vsjh.famconnect.famconnect;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import java.net.URLEncoder;
  * Created by Victor on 9-11-2016.
  */
 
-public class BackgroundTask extends AsyncTask<String,Void,String> {
+public class BackgroundTask extends AsyncTask<String,Void,String>{
     AlertDialog alertDialog;
     Context ctx;
     BackgroundTask(Context ctx)
@@ -32,6 +33,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(ctx).create();
         alertDialog.setTitle("Login information...");
+
     }
 
     @Override
@@ -41,9 +43,14 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         String method = params[0];
         if(method.equals("register"))
         {
-            String name = params[1];
-            String user_name = params[2];
-            String user_pass = params[3];
+            String first_name = params[1];
+            String last_name = params [2];
+            String user_name = params[3];
+            String user_email = params[4];
+            String user_email_check = params[5];
+            String user_pass = params[6];
+            String user_pass_check = params[7];
+            String user_birth = params[8];
             try {
                 URL url = new URL(reg_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -52,9 +59,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 OutputStream OS = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
 
-                String data = URLEncoder.encode("user", "UTF-8")+"=" + URLEncoder.encode(name,"UTF-8") + "&" +
-                        URLEncoder.encode("user_name", "UTF-8")+"=" + URLEncoder.encode(user_name,"UTF-8") + "&" +
-                        URLEncoder.encode("user_pass", "UTF-8")+"=" + URLEncoder.encode(user_pass,"UTF-8");
+                String data = URLEncoder.encode("first_name", "UTF-8")+ "=" + URLEncoder.encode(first_name,"UTF-8") + "&" +
+                        URLEncoder.encode("last_name", "UTF-8")+ "=" + URLEncoder.encode(last_name,"UTF-8") + "&" +
+                        URLEncoder.encode("user_name", "UTF-8")+ "=" + URLEncoder.encode(user_name,"UTF-8") + "&" +
+                        URLEncoder.encode("user_email", "UTF-8")+ "=" + URLEncoder.encode(user_email,"UTF-8") + "&" +
+                        URLEncoder.encode("user_pass", "UTF-8")+ "=" + URLEncoder.encode(user_pass,"UTF-8") + "&" +
+                        URLEncoder.encode("user_birth", "UTF-8")+ "=" + URLEncoder.encode(user_birth,"UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -80,9 +90,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
+
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String data = URLEncoder.encode("login_name","UTF-8")+"="+ URLEncoder.encode(login_name,"UTF-8")+"&"+
-                    URLEncoder.encode("login_pass","UTF-8")+"="+ URLEncoder.encode(login_pass,"UTF-8");
+                String data = URLEncoder.encode("login_name","UTF-8")+"="+URLEncoder.encode(login_name,"UTF-8")+"&"+
+                        URLEncoder.encode("login_pass","UTF-8")+"="+URLEncoder.encode(login_pass,"UTF-8");
+
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -122,7 +134,14 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
-        else
+        else if(result.equals("Login success, welcome"))
+        {
+            Intent i = new Intent(ctx, UserAreaActivity.class);
+            ctx.startActivity(i);
+            alertDialog.setMessage(result);
+            alertDialog.show();
+        }
+        else if(result.equals("Login failed"))
         {
             alertDialog.setMessage(result);
             alertDialog.show();
